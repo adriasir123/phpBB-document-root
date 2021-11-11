@@ -1,0 +1,142 @@
+<div class="navbar navbar-top" role="navigation">
+	<div class="inner">
+		<nav class="navigation-bar-top">
+			<ul class="navbar-bar" id='main' role="menubar">
+					{% if S_REGISTERED_USER %}
+					{% EVENT navbar_header_user_profile_prepend %}
+				<li class="nav-button-front" id="username_logged_in" >
+					{% EVENT navbar_header_username_prepend %}
+					<div class="header-profile dropdown-container">
+						<a href="{{ U_PROFILE }}" class="header-avatar dropdown-trigger">{% if CURRENT_USER_AVATAR %}{{ CURRENT_USER_AVATAR }} {% else %} <img src="{{ T_THEME_PATH }}/images/no_avatar.gif" alt="" /> {% endif %} {{ CURRENT_USERNAME_SIMPLE }}</a>
+					<div class="dropdown">
+					<div class="pointer"><div class="pointer-inner"></div></div>
+						<ul class="dropdown-contents" role="menu">
+							{% EVENT navbar_header_quick_links_before %}
+							{% if U_RESTORE_PERMISSIONS %}
+							<li>
+								<a href="{{ U_RESTORE_PERMISSIONS }}">
+									<i class="icon fa-refresh fa-fw" aria-hidden="true"></i><span>{{ lang('RESTORE_PERMISSIONS') }}</span>
+								</a>
+							</li>
+							{% endif %}
+
+							{% EVENT navbar_header_profile_list_before %}
+
+							<li>
+								<a href="{{ U_PROFILE }}" title="{{ lang('PROFILE') }}" role="menuitem">
+									<i class="icon fa-sliders fa-fw" aria-hidden="true"></i><span>{{ lang('PROFILE') }}</span>
+								</a>
+							</li>
+							{% if U_USER_PROFILE %}
+							<li>
+								<a href="{{ U_USER_PROFILE }}" title="{{ lang('READ_PROFILE') }}" role="menuitem">
+									<i class="icon fa-user fa-fw" aria-hidden="true"></i><span>{{ lang('READ_PROFILE') }}</span>
+								</a>
+							</li>
+							{% endif %}
+
+							{% EVENT navbar_header_profile_list_after %}
+							{% if not S_IS_BOT and (S_DISPLAY_MEMBERLIST or U_TEAM) %}
+							{% if S_DISPLAY_MEMBERLIST %}	
+							<li>
+								<a href="{{ U_MEMBERLIST }}" role="menuitem">
+									<i class="icon fa-group fa-fw" aria-hidden="true"></i><span>{{ lang('MEMBERLIST') }}</span>
+								</a>
+							</li>
+							{% endif %}
+							{% if U_TEAM %}	
+							<li>
+								<a href="{{ U_TEAM }}" role="menuitem">
+									<i class="icon fa-shield fa-fw" aria-hidden="true"></i><span>{{ lang('THE_TEAM') }}</span>
+								</a>
+							</li>
+							{% endif %}
+							{% endif %}
+							{% EVENT navbar_header_quick_links_after %}		
+						</ul>
+					</div>
+					</div>
+				{% EVENT navbar_header_username_append %}
+				</li>			
+				{% EVENT navbar_header_user_profile_append %}
+
+				{% elseif not S_IS_BOT %}
+				<li class="nav-button-front" >
+					<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" role="menuitem">
+						<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{{ lang('LOGIN_LOGOUT') }}</span>
+					</a>
+				</li>
+				{% if S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) %}
+				<li >
+					<a class="blink" href="{{ U_REGISTER }}" role="menuitem">
+						<i class="icon fa-pencil-square-o  fa-fw" aria-hidden="true"></i><span>{{ lang('REGISTER') }}</span>
+					</a>
+				</li>
+				{% endif %}
+				{% EVENT navbar_header_logged_out_content %}
+				{% endif %}
+
+				
+				{% if S_REGISTERED_USER %}
+				{% if S_NOTIFICATIONS_DISPLAY %}
+				<li >
+					<a id="myBtn" title="{{ lang('NOTIFICATIONS') }}" accesskey="x" role="menuitem">
+						<i class="icon fa-bell fa-fw" aria-hidden="true"></i><span class="hide-name">{{ lang('NOTIFICATIONS') }}</span><strong class="badge{% if not NOTIFICATIONS_COUNT %} hidden{% endif %}">{{ NOTIFICATIONS_COUNT }}</strong>
+					</a>
+				</li>
+				{% endif %}
+				{% if S_DISPLAY_PM %}
+				<li >
+					<a href="{{ U_PRIVATEMSGS }}" role="menuitem">
+						<i class="icon fa-inbox fa-fw" aria-hidden="true"></i><span class="hide-name">{{ lang('PRIVATE_MESSAGE') }}</span><strong class="badge{% if not PRIVATE_MESSAGE_COUNT %} hidden{% endif %}">{{ PRIVATE_MESSAGE_COUNT }}</strong>
+					</a>
+				</li>
+				{% endif %}
+
+				{% endif %}
+				{% EVENT overall_header_navigation_prepend %}
+				{% EVENT overall_header_navigation_append %}
+				<li {% if not S_USER_LOGGED_IN %} class="nav-button-end" {% endif %} >
+					<a href="{{ U_FAQ }}" rel="help" title="{{ lang('FAQ_EXPLAIN') }}" role="menuitem">
+						<i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>{{ lang('FAQ') }}</span>
+					</a>
+				</li>
+				{% if U_ACP %}
+				<li >
+					<a href="{{ U_ACP }}" title="{{ lang('ACP') }}" role="menuitem">
+						<i class="icon fa-cogs fa-fw" aria-hidden="true"></i><span>{{ lang('ACP_SHORT') }}</span>
+					</a>
+				</li>
+				{% endif %}
+				{% if U_MCP %}
+				<li >
+					<a href="{{ U_MCP }}" title="{{ lang('MCP') }}" role="menuitem">
+						<i class="icon fa-gavel fa-fw" aria-hidden="true"></i><span>{{ lang('MCP_SHORT') }}</span>
+					</a>
+				</li>
+				{% endif %}
+				{% if S_REGISTERED_USER %}
+				<li  class="nav-button-end">
+					<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" role="menuitem">
+						<i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{{ lang('LOGIN_LOGOUT') }}</span>
+					</a>
+				</li>
+				{% endif %}
+				<li class="more hidden nav-button-end" data-width="80" >
+					<a href="#"><span class="fa fa-ellipsis-h" style="display:block;font-size: 20px;position: relative;left: 12px;top: -2px;z-index: 100;"></span></a>
+						<ul></ul>
+				</li>
+			</ul>
+		</nav>
+
+	</div>
+		<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			{% INCLUDE 'notification_dropdown.html' %}
+		</div>
+
+	</div>	
+</div>

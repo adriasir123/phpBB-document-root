@@ -1,0 +1,12 @@
+/* Online image */
+.online {background-image: url("./icon_user_online.png");z-index: 1000;}
+.online2 {
+	background-image: url("./icon_user_online.png");
+	z-index: 1;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+	width: 58px;
+	height: 58px;
+}
